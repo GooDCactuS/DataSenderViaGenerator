@@ -53,8 +53,8 @@ function addField(event) {
 
 function generate() {
     jsonName = $("#jsonName")[0].value;
-    let startIndex = $("#startIndex")[0].value;
-    rowNumber = $("#rowNumber")[0].value;
+    let startIndex = parseInt($("#startIndex")[0].value);
+    rowNumber = parseInt($("#rowNumber")[0].value);
 
     let dataArray = new Array();
     let types = new Array();
@@ -68,7 +68,7 @@ function generate() {
         types.push(newType);
     }
 
-    for (let i = startIndex; i < parseInt(startIndex) + parseInt(rowNumber); i++) {
+    for (let i = startIndex; i < startIndex + rowNumber; i++) {
         let newObj = new Object();
         for (let j = 0; j < types.length; j++) {
             switch (types[j].type) {
