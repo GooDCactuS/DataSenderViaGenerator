@@ -19,6 +19,7 @@ namespace DataSenderViaGenerator.Models
         Integer,
         String,
         Date,
+        DateAndTimeString,
         Guid,
         Email,
         Phone

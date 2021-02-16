@@ -90,6 +90,9 @@ function generate() {
                 case "Phone":
                     data = Math.floor(100000000 + Math.random() * 900000000);
                     break;
+                case "DateAndTimeString":
+                    data = new Date(999999999999 + i * 10000000).toUTCString();
+                    break;
             }
             newObj[types[j].name] = data;
         }
