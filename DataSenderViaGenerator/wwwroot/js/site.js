@@ -68,7 +68,7 @@ function generate() {
         types.push(newType);
     }
 
-    for (let i = startIndex; i < startIndex + rowNumber; i++) {
+    for (let i = startIndex; i < parseInt(startIndex) + parseInt(rowNumber); i++) {
         let newObj = new Object();
         for (let j = 0; j < types.length; j++) {
             switch (types[j].type) {
