@@ -1,0 +1,59 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Generator";
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GeneratorSettings.Fields[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GeneratorSettings.Fields[0].Type)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.GeneratorSettings.Fields)
+        {
+            <tr name="generatorField">
+                <td>
+                    <input type="text" style="width:100%" value="@Html.DisplayFor(modelItem => item.Name)" />
+                </td>
+                <td>
+                    <select class="form-control" asp-items="@(new SelectList(Model.GeneratorSettings.Types, item.Type.ToString()))"></select>
+                </td>
+                <td>
+                    <input type="button" class="btn btn-outline-primary" value="Delete" onclick="deleteField(this)" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <input type="button" class="btn btn-outline-primary" value="Add Column" onclick="addField()" /><br />
+</div>
+<hr />
+
+<div>
+    Start index:
+    <input type="text" id="startIndex" value="@Model.GeneratorSettings.StartIndex" /> <br />
+    Rows:
+    <input type="text" id="rowNumber" value="@Model.GeneratorSettings.RowNumber" /> <br />
+    Json Data Name:
+    <input type="text" id="jsonName" /> <br />
+    <input type="button" class="btn btn-primary" value="Generate" onclick="generate()" />
+    <input type="button" id="saveButton" class="btn btn-primary" style="display:none" value="Save into file" onclick="save()" />
+</div>
+
+<div>
+    <textarea id="generatedData" style="display:none" cols="150" rows="30"></textarea>
+</div>
+
+<div>
+    <select id="selectOptions" hidden="hidden" asp-items="@(new SelectList(Model.GeneratorSettings.Types))"></select>
+</div>
+
