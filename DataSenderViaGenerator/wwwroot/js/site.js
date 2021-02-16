@@ -58,6 +58,10 @@ function generate() {
     rowNumber = parseInt($("#rowNumber")[0].value);
     fileType = $("#fileType")[0].selectedOptions[0].text;
 
+    if (rowNumber < 1) {
+        return;
+    }
+
     let dataArray = new Array();
     let types = new Array();
 
