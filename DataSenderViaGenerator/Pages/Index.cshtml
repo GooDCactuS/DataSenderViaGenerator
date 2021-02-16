@@ -43,10 +43,22 @@
     <input type="number" id="startIndex" value="@Model.GeneratorSettings.StartIndex" /> <br />
     Rows:
     <input type="number" id="rowNumber" value="@Model.GeneratorSettings.RowNumber" /> <br />
-    Json Data Name:
-    <input type="text" id="jsonName" /> <br />
+
+    File Type:
+    <select id="fileType" onchange="onFileTypeChanged(this)">
+        <option selected="selected" value="1">JSON</option>
+        <option value="2">CSV</option>
+    </select>
+
+    <div id="jsonNameDiv" style="display:inline">
+        Json Data Name:
+        <input type="text" id="jsonName" />
+    </div>
+
+    <br />
+
     <input type="button" class="btn btn-primary" value="Generate" onclick="generate()" />
-    <input type="button" id="saveButton" class="btn btn-primary" style="display:none" value="Save into file" onclick="save()" />
+    <input type="button" id="saveButton" class="btn btn-primary" style="display:none" value="Save into file" onclick="save()" /> <br />
 </div>
 
 <div>

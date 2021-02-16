@@ -3,9 +3,10 @@
 
 // Write your JavaScript code.
 
-var generatedJson;
+var generatedText;
 var jsonName;
 var rowNumber;
+var fileType;
 
 function deleteField(event) {
     if (event.target) {
@@ -34,7 +35,7 @@ function addField(event) {
     select.innerHTML = $("#selectOptions").html();
     tdType.appendChild(select);
     tr.appendChild(tdType);
-    
+
     let tdOptions = document.createElement("td");
     let inputBtn = document.createElement("input");
     inputBtn.type = "button";
@@ -45,8 +46,8 @@ function addField(event) {
     });
 
     tdOptions.appendChild(inputBtn);
-    tr.appendChild(tdOptions);    
-    
+    tr.appendChild(tdOptions);
+
 
     $(".table>tbody")[0].appendChild(tr);
 }
@@ -55,6 +56,7 @@ function generate() {
     jsonName = $("#jsonName")[0].value;
     let startIndex = parseInt($("#startIndex")[0].value);
     rowNumber = parseInt($("#rowNumber")[0].value);
+    fileType = $("#fileType")[0].selectedOptions[0].text;
 
     let dataArray = new Array();
     let types = new Array();
@@ -79,7 +81,15 @@ function generate() {
                     data = `${types[j].name + i}`;
                     break;
                 case "Date":
-                    data = new Date(999999999999 + i * 10000000);
+                    switch (fileType) {
+                        case "JSON":
+                            data = new Date(999999999999 + i * 10000000);
+                            break;
+                        default:
+                            data = new Date(999999999999 + i * 10000000).toLocaleString().replace(",", "");
+                            break;
+                    }
+
                     break;
                 case "Guid":
                     data = uuidv4();
@@ -91,7 +101,7 @@ function generate() {
                     data = Math.floor(100000000 + Math.random() * 900000000);
                     break;
                 case "DateAndTimeString":
-                    data = new Date(999999999999 + i * 10000000).toUTCString();
+                    data = new Date(999999999999 + i * 10000000).toLocaleString().replace(",", "");
                     break;
             }
             newObj[types[j].name] = data;
@@ -107,10 +117,21 @@ function generate() {
         generatedData = dataArray;
     }
 
-    generatedJson = JSON.stringify(generatedData);
+    switch (fileType) {
+        case "JSON":
+            generatedText = JSON.stringify(generatedData);
+            break;
+        case "CSV":
+            generatedText = convertToCSV(dataArray);
+            break;
+        default:
+            generatedText = "Не распознан тип файла";
+    }
+
+
 
     let inp = $("#generatedData")[0];
-    inp.value = generatedJson;
+    inp.value = generatedText;
     inp.style = "";
 
     $("#saveButton")[0].style = "";
@@ -124,16 +145,32 @@ function uuidv4() {
     });
 }
 
+function convertToCSV(data) {
+    const array = [Object.keys(data[0])].concat(data)
+
+    return array.map(it => {
+        return Object.values(it).toString()
+    }).join('\n');
+}
+
 function save() {
     var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(generatedJson));
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(generatedText));
 
     let fileName;
 
-    if (jsonName) {
-        fileName = `${jsonName}-${rowNumber}.json`;
-    } else {
-        fileName = `testdata-${rowNumber}.json`;
+    switch (fileType) {
+        case "JSON":
+            if (jsonName) {
+                fileName = `${jsonName}-${rowNumber}.json`;
+            } else {
+                fileName = `testdata-${rowNumber}.json`;
+            }
+            break;
+
+        case "CSV":
+            fileName = `testdata-${rowNumber}.csv`;
+            break;
     }
 
     element.setAttribute('download', fileName);
@@ -141,4 +178,13 @@ function save() {
     element.style.display = 'none';
 
     element.click();
+}
+
+function onFileTypeChanged(event) {
+    if (event.selectedOptions[0].text === "JSON") {
+        $("#jsonNameDiv")[0].style.display = "inline";
+    }
+    else {
+        $("#jsonNameDiv")[0].style.display = "none";
+    }
 }
