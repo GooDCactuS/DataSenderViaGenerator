@@ -1,0 +1,27 @@
+﻿@page
+@model DataSenderViaGenerator.Pages.EncoderModel
+@{
+    ViewData["Title"] = "Encoder";
+}
+
+<div>
+    <textarea id="taFrom" cols="60" rows="25"></textarea>
+    <textarea id="taTo" cols="60" rows="25"></textarea>
+</div>
+
+<div style="display:none">
+    <select id="encoder" onchange="onEncoderChanged(this)">
+        <option selected="selected" value="1">UTF-8</option>
+    </select>
+</div>
+
+<div>
+    <input type="button" onclick="onEncodeClick()" value="Encode" />
+    <input type="button" onclick="onDecodeClick()" value="Decode" />
+</div>
+
+@section Scripts {
+    <environment names="Development,Staging,Production">
+        <script type="text/javascript" src="~/js/encoder.js" asp-append-version="true"></script>
+    </environment>
+}
