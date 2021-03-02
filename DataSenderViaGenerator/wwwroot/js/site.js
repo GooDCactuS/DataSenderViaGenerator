@@ -52,6 +52,15 @@ function addField(event) {
     $(".table>tbody")[0].appendChild(tr);
 }
 
+function onFileTypeChanged(event) {
+    if (event.selectedOptions[0].text === "JSON") {
+        $("#jsonNameDiv")[0].style.display = "inline";
+    }
+    else {
+        $("#jsonNameDiv")[0].style.display = "none";
+    }
+}
+
 function generate() {
     jsonName = $("#jsonName")[0].value;
     let startIndex = parseInt($("#startIndex")[0].value);
@@ -139,6 +148,7 @@ function generate() {
     inp.style = "";
 
     $("#saveButton")[0].style = "";
+    $("#sendButton")[0].style = "";
 
 }
 
@@ -184,11 +194,19 @@ function save() {
     element.click();
 }
 
-function onFileTypeChanged(event) {
-    if (event.selectedOptions[0].text === "JSON") {
-        $("#jsonNameDiv")[0].style.display = "inline";
-    }
-    else {
-        $("#jsonNameDiv")[0].style.display = "none";
-    }
+function sendForm() {
+    let textDataEl = $("#textData")[0];
+    textDataEl.style.display = "none";
+    $("#textResult")[0].style = "display:auto";
+
+    $.ajax({
+        url: "Sender",
+        type: "Post",
+        data: {
+            data: textDataEl.value
+        },
+        success: function (result) {
+            debugger;
+        }
+    });
 }

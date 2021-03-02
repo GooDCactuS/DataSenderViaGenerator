@@ -17,6 +17,9 @@ namespace DataSenderViaGenerator.Pages
         [BindProperty]
         public GeneratorSettings GeneratorSettings { get; set; }
 
+        [BindProperty]
+        public string Data { get; set; }
+
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;

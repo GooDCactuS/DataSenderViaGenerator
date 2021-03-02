@@ -1,0 +1,35 @@
+﻿@page
+@model DataSenderViaGenerator.Pages.SenderModel
+@{
+    ViewData["Title"] = "Sender";
+}
+
+<form id="sendForm">
+    <div>
+        <label asp-for="@Model.SenderSettings.Url"></label>
+        <input asp-for="@Model.SenderSettings.Url" />
+    </div>
+    <div>
+        <label asp-for="@Model.SenderSettings.ServiceName"></label>
+        <input asp-for="@Model.SenderSettings.ServiceName" />
+    </div>
+    <div>
+        <label asp-for="@Model.SenderSettings.EndPoint"></label>
+        <input asp-for="@Model.SenderSettings.EndPoint" />
+    </div>
+    <div>
+        <label asp-for="@Model.SenderSettings.Username"></label>
+        <input asp-for="@Model.SenderSettings.Username" />
+    </div>
+    <div>
+        <label asp-for="@Model.SenderSettings.Password"></label>
+        <input asp-for="@Model.SenderSettings.Password" type="password" />
+    </div>
+    <textarea id="textData" asp-for="@Model.SenderSettings.Data" cols="150" rows="25" placeholder="Insert your data"></textarea>
+    <textarea id="textResult" cols="150" rows="25" style="display:none">Result</textarea>
+    <br />
+    <div>
+        <input type="button" class="btn btn-primary" value="Send" onclick="sendForm()" />
+    </div>
+
+</form>

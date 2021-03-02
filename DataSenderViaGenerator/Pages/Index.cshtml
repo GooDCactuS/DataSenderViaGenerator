@@ -38,32 +38,39 @@
 </div>
 <hr />
 
-<div>
-    Start index:
-    <input type="number" id="startIndex" value="@Model.GeneratorSettings.StartIndex" /> <br />
-    Rows:
-    <input type="number" id="rowNumber" value="@Model.GeneratorSettings.RowNumber" /> <br />
+<form asp-page="Sender" asp-page-handler="Pregenerated" method="post">
 
-    File Type:
-    <select id="fileType" onchange="onFileTypeChanged(this)">
-        <option selected="selected" value="1">JSON</option>
-        <option value="2">CSV</option>
-    </select>
+    <div>
+        Start index:
+        <input type="number" id="startIndex" value="@Model.GeneratorSettings.StartIndex" /> <br />
+        Rows:
+        <input type="number" id="rowNumber" value="@Model.GeneratorSettings.RowNumber" /> <br />
 
-    <div id="jsonNameDiv" style="display:inline">
-        Json Data Name:
-        <input type="text" id="jsonName" />
+        File Type:
+        <select id="fileType" onchange="onFileTypeChanged(this)">
+            <option selected="selected" value="1">JSON</option>
+            <option value="2">CSV</option>
+        </select>
+
+        <div id="jsonNameDiv" style="display:inline">
+            Json Data Name:
+            <input type="text" id="jsonName" />
+        </div>
+
+        <br />
+
+        <input type="button" class="btn btn-primary" value="Generate" onclick="generate()" />
+        <input type="button" id="saveButton" class="btn btn-primary" style="display:none" value="Save into file" onclick="save()" />
+        <input type="submit" id="sendButton" class="btn btn-primary" style="display:none" value="Send to outer service" />
+
+        <br />
     </div>
 
-    <br />
+    <div>
+        <textarea id="generatedData" asp-for="@Model.Data" style="display:none" cols="150" rows="30"></textarea>
+    </div>
 
-    <input type="button" class="btn btn-primary" value="Generate" onclick="generate()" />
-    <input type="button" id="saveButton" class="btn btn-primary" style="display:none" value="Save into file" onclick="save()" /> <br />
-</div>
-
-<div>
-    <textarea id="generatedData" style="display:none" cols="150" rows="30"></textarea>
-</div>
+</form>
 
 <div>
     <select id="selectOptions" hidden="hidden" asp-items="@(new SelectList(Model.GeneratorSettings.Types))"></select>
