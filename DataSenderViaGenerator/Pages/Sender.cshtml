@@ -33,3 +33,9 @@
     </div>
 
 </form>
+
+@section Scripts {
+    <environment names="Development,Staging,Production">
+        <script type="text/javascript" src="~/js/sender.js" asp-append-version="true"></script>
+    </environment>
+}

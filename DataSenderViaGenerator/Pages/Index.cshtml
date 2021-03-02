@@ -76,3 +76,8 @@
     <select id="selectOptions" hidden="hidden" asp-items="@(new SelectList(Model.GeneratorSettings.Types))"></select>
 </div>
 
+@section Scripts {
+    <environment names="Development,Staging,Production">
+        <script type="text/javascript" src="~/js/generator.js" asp-append-version="true"></script>
+    </environment>
+}
